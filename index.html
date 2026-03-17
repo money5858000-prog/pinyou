@@ -3,234 +3,255 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>品祐租賃 | 數位債權與 AI 風控</title>
+    <title>品祐租賃 - 您的資產增值與資金周轉夥伴</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;700;900&display=swap" rel="stylesheet">
-    <!-- 核心圖標庫 -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/lucide/0.263.0/umd/lucide.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
+        :root {
+            --gold: #D4AF37;
+            --dark-bg: #0F0F0F;
+            --card-bg: #1A1A1A;
+        }
         body {
+            background-color: var(--dark-bg);
+            color: #E0E0E0;
             font-family: 'Noto Sans TC', sans-serif;
-            background-color: #050505;
-            color: #f3f4f6;
-            margin: 0;
-            overflow-x: hidden;
         }
-
-        .gold-text {
-            background: linear-gradient(135deg, #fbbf24 0%, #d97706 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .glass-header {
-            background: rgba(10, 10, 10, 0.8);
-            backdrop-filter: blur(15px);
-            border-bottom: 1px solid rgba(251, 191, 36, 0.1);
-        }
-
-        .card-gradient {
-            background: linear-gradient(180deg, rgba(24, 24, 27, 0.8) 0%, rgba(10, 10, 10, 1) 100%);
-            border: 1px solid rgba(251, 191, 36, 0.1);
-        }
-
-        /* 表單彈窗優化 */
-        #form-modal {
-            display: none;
-            position: fixed;
-            inset: 0;
-            background: rgba(0, 0, 0, 0.9);
-            z-index: 1000;
-            backdrop-filter: blur(10px);
-            padding: 15px;
-            align-items: center;
-            justify-content: center;
-        }
+        .text-gold { color: var(--gold); }
+        .bg-gold { background-color: var(--gold); }
+        .border-gold { border-color: var(--gold); }
         
-        .form-container {
-            width: 100%;
-            max-width: 850px;
-            height: 90vh;
-            background: #ffffff;
-            border-radius: 20px;
-            overflow: hidden;
-            position: relative;
-            box-shadow: 0 25px 50px -12px rgba(251, 191, 36, 0.25);
+        .hero-gradient {
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1554224155-169641357599?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80');
+            background-size: cover;
+            background-position: center;
         }
-
-        .btn-shine {
-            position: relative;
-            overflow: hidden;
-        }
-        .btn-shine::after {
-            content: "";
-            position: absolute;
-            top: -50%; left: -50%;
-            width: 200%; height: 200%;
-            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.3), transparent);
-            transform: rotate(45deg);
-            transition: 0.8s;
-        }
-        .btn-shine:hover::after { left: 100%; top: 100%; }
-
-        @keyframes pulse-slow {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.3; }
-        }
-        .animate-pulse-slow { animation: pulse-slow 3s infinite; }
-        
-        iframe {
-            background-color: #ffffff;
+        .service-card:hover {
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.2);
         }
     </style>
 </head>
-<body class="selection:bg-amber-500/30">
+<body>
 
-    <!-- 頂部導覽列 -->
-    <header class="fixed top-0 w-full z-50 glass-header transition-all duration-300">
-        <div class="max-w-7xl mx-auto px-6 h-20 flex justify-between items-center">
-            <div class="flex items-center gap-4">
-                <img src="S__99287044_0.jpg" alt="品祐租賃" class="h-10 w-auto rounded-lg shadow-lg shadow-amber-900/20" onerror="this.src='https://via.placeholder.com/40?text=PY'">
-                <div class="hidden sm:block">
-                    <div class="text-lg font-black gold-text leading-none tracking-tight">品祐租賃</div>
-                    <div class="text-[8px] text-zinc-500 tracking-[0.2em] mt-1 font-bold">PIN YOU ASSET MANAGEMENT</div>
+    <!-- 導航欄 -->
+    <nav class="fixed w-full z-50 bg-black/80 backdrop-blur-md border-b border-gold/30">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <div class="flex items-center">
+                    <span class="text-2xl font-bold text-gold tracking-widest">品祐租賃</span>
+                    <span class="ml-2 text-xs text-gray-400 hidden sm:block">PIN YOU LEASING</span>
+                </div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="#about" class="hover:text-gold transition">關於我們</a>
+                    <a href="#services" class="hover:text-gold transition">融資服務</a>
+                    <a href="#process" class="hover:text-gold transition">申請流程</a>
+                    <a href="#contact" class="px-4 py-2 bg-gold text-black font-bold rounded hover:bg-yellow-500 transition">立即諮詢</a>
                 </div>
             </div>
-            
-            <div class="flex items-center gap-4 md:gap-8">
-                <a href="tel:0917769309" class="text-xs text-zinc-400 hover:text-amber-500 transition-colors hidden md:flex items-center gap-2">
-                    <i data-lucide="phone-call" class="w-3 h-3 text-amber-500"></i> 0917-769-309
+        </div>
+    </nav>
+
+    <!-- 首頁板塊 -->
+    <header class="hero-gradient h-screen flex items-center justify-center text-center px-4">
+        <div class="max-w-3xl">
+            <h1 class="text-4xl md:text-6xl font-bold mb-6 leading-tight">
+                資產活化，<span class="text-gold">品</span>味財富<br>
+                穩健周轉，<span class="text-gold">祐</span>您啟航
+            </h1>
+            <p class="text-lg md:text-xl text-gray-300 mb-8">
+                專業動產與不動產融資顧問，以精準風控與合法債權保障，<br>為您的資金需求提供最強有力的後盾。
+            </p>
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <a href="#contact" class="px-8 py-4 bg-gold text-black text-lg font-bold rounded-full hover:scale-105 transition">
+                    申請資金需求
                 </a>
-                <button onclick="openModal()" class="btn-shine bg-amber-500 hover:bg-amber-400 text-black px-8 py-3 rounded-full text-xs font-black transition-all active:scale-95 shadow-lg shadow-amber-500/20">
-                    立即申請
-                </button>
+                <a href="#services" class="px-8 py-4 border border-gold text-gold text-lg font-bold rounded-full hover:bg-gold hover:text-black transition">
+                    瞭解服務項目
+                </a>
             </div>
         </div>
     </header>
 
-    <!-- 英雄區 (Hero Section) -->
-    <section class="relative pt-44 pb-32 px-6 overflow-hidden">
-        <!-- 裝飾背景 -->
-        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full pointer-events-none">
-            <div class="absolute top-20 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-amber-500/10 rounded-full blur-[120px]"></div>
-        </div>
-
-        <div class="max-w-7xl mx-auto text-center relative z-10">
-            <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-amber-500/20 bg-amber-500/5 mb-12">
-                <span class="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse-slow"></span>
-                <span class="text-[10px] text-amber-500 font-bold tracking-widest uppercase">Precision Risk Intelligence System</span>
-            </div>
-            
-            <h1 class="text-5xl md:text-8xl font-black mb-10 leading-[1] tracking-tighter">
-                賦予債權 <br><span class="gold-text">全新價值</span>
-            </h1>
-            
-            <p class="text-zinc-500 text-base md:text-xl max-w-2xl mx-auto mb-20 leading-relaxed font-light">
-                我們運用數位化技術重新定義資產管理，為債權人與企業提供最快、最精準的資本回收解決方案，保護您的利益，降低資源浪費。
-            </p>
-            
-            <!-- 核心功能卡片 -->
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
-                <div class="card-gradient p-10 rounded-[32px] text-left hover:border-amber-500/40 transition-all cursor-pointer group" onclick="openModal()">
-                    <div class="w-14 h-14 rounded-2xl bg-amber-500/10 flex items-center justify-center mb-8 group-hover:bg-amber-500/20 transition-colors">
-                        <i data-lucide="shield-check" class="w-7 h-7 text-amber-500"></i>
-                    </div>
-                    <h3 class="font-bold text-xl text-white mb-3">極速審核</h3>
-                    <p class="text-sm text-zinc-500 leading-relaxed">線上進件，AI初步風控過濾，大幅縮短資本等待時間，加速資金回籠。</p>
+    <!-- 核心價值 -->
+    <section id="about" class="py-20 px-4">
+        <div class="max-w-7xl mx-auto text-center">
+            <h2 class="text-3xl font-bold mb-16 text-gold">為什麼選擇品祐？</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="p-8 bg-card-bg rounded-2xl border border-gray-800">
+                    <i class="fas fa-bolt text-4xl text-gold mb-6"></i>
+                    <h3 class="text-xl font-bold mb-4">極速撥款</h3>
+                    <p class="text-gray-400">流程簡化，最快當日核貸，解決您的燃眉之急。</p>
                 </div>
-
-                <div class="card-gradient p-10 rounded-[32px] text-left hover:border-amber-500/40 transition-all cursor-pointer group" onclick="window.open('https://line.me/ti/p/t8gvkEN7jA')">
-                    <div class="w-14 h-14 rounded-2xl bg-amber-500/10 flex items-center justify-center mb-8 group-hover:bg-amber-500/20 transition-colors">
-                        <i data-lucide="message-square" class="w-7 h-7 text-amber-500"></i>
-                    </div>
-                    <h3 class="font-bold text-xl text-white mb-3">專業對接</h3>
-                    <p class="text-sm text-zinc-500 leading-relaxed">專屬顧問一對一處理各類疑難雜症，確保案件流程順暢且具備隱私。</p>
+                <div class="p-8 bg-card-bg rounded-2xl border border-gray-800">
+                    <i class="fas fa-shield-halved text-4xl text-gold mb-6"></i>
+                    <h3 class="text-xl font-bold mb-4">合法合規</h3>
+                    <p class="text-gray-400">遵循法律規範，透明合約條款，全面保障債權與債務雙方權益。</p>
                 </div>
-
-                <div class="card-gradient p-10 rounded-[32px] text-left hover:border-amber-500/40 transition-all cursor-pointer group">
-                    <div class="w-14 h-14 rounded-2xl bg-amber-500/10 flex items-center justify-center mb-8 group-hover:bg-amber-500/20 transition-colors">
-                        <i data-lucide="gantt-chart" class="w-7 h-7 text-amber-500"></i>
-                    </div>
-                    <h3 class="font-bold text-xl text-white mb-3">合法合規</h3>
-                    <p class="text-sm text-zinc-500 leading-relaxed">專業法律團隊把關，讓每一筆資產流動都具備堅實法律基礎，安全無虞。</p>
+                <div class="p-8 bg-card-bg rounded-2xl border border-gray-800">
+                    <i class="fas fa-hand-holding-dollar text-4xl text-gold mb-6"></i>
+                    <h3 class="text-xl font-bold mb-4">成數最高</h3>
+                    <p class="text-gray-400">精準資產殘值評估，提供市場最具競爭力的融資成數。</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- 底部資訊 -->
-    <footer class="py-24 border-t border-zinc-900 bg-black/50">
-        <div class="max-w-7xl mx-auto px-6 text-center">
-            <img src="S__99287044_0.jpg" alt="Logo" class="h-10 w-auto mx-auto mb-8 opacity-40 grayscale hover:grayscale-0 transition-all duration-500">
-            <div class="text-zinc-600 text-[10px] tracking-[0.4em] uppercase mb-12">
-                品祐租賃有限公司 | 統一編號 93319309 | 嘉義市西區
+    <!-- 融資項目 -->
+    <section id="services" class="py-20 bg-black/50 px-4">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold text-gold">專業融資服務</h2>
+                <p class="text-gray-400 mt-4">針對不同資產，提供最合適的資金解決方案</p>
             </div>
-            <div class="flex justify-center gap-8">
-                <a href="https://line.me/ti/p/t8gvkEN7jA" target="_blank" class="w-12 h-12 rounded-full border border-zinc-800 flex items-center justify-center text-zinc-500 hover:text-amber-500 hover:border-amber-500/50 transition-all">
-                    <i data-lucide="message-circle" class="w-5 h-5"></i>
-                </a>
-                <a href="tel:0917769309" class="w-12 h-12 rounded-full border border-zinc-800 flex items-center justify-center text-zinc-500 hover:text-amber-500 hover:border-amber-500/50 transition-all">
-                    <i data-lucide="phone" class="w-5 h-5"></i>
-                </a>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                <!-- 汽車融資 -->
+                <div class="service-card flex flex-col md:flex-row bg-card-bg rounded-3xl overflow-hidden border border-gray-800">
+                    <div class="md:w-1/2 h-64 md:h-auto overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=800&q=80" alt="汽車貸款" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-8 md:w-1/2">
+                        <h3 class="text-2xl font-bold mb-4 text-gold">汽車增貸 / 融資</h3>
+                        <ul class="space-y-3 text-gray-300 mb-6">
+                            <li><i class="fas fa-check text-gold mr-2"></i>不限車種、車齡皆可評估</li>
+                            <li><i class="fas fa-check text-gold mr-2"></i>免留車，讓您照常使用</li>
+                            <li><i class="fas fa-check text-gold mr-2"></i>銀行二貸、增貸空間彈性</li>
+                        </ul>
+                        <button onclick="scrollToContact()" class="w-full py-3 border border-gold text-gold rounded-lg hover:bg-gold hover:text-black transition">查看額度</button>
+                    </div>
+                </div>
+                <!-- 房屋融資 -->
+                <div class="service-card flex flex-col md:flex-row bg-card-bg rounded-3xl overflow-hidden border border-gray-800">
+                    <div class="md:w-1/2 h-64 md:h-auto overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=800&q=80" alt="房屋融資" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-8 md:w-1/2">
+                        <h3 class="text-2xl font-bold mb-4 text-gold">二胎房貸 / 房屋增貸</h3>
+                        <ul class="space-y-3 text-gray-300 mb-6">
+                            <li><i class="fas fa-check text-gold mr-2"></i>持分、屋齡不限</li>
+                            <li><i class="fas fa-check text-gold mr-2"></i>不看信用評分，只看資產殘值</li>
+                            <li><i class="fas fa-check text-gold mr-2"></i>資金靈活應用，協助債務整合</li>
+                        </ul>
+                        <button onclick="scrollToContact()" class="w-full py-3 border border-gold text-gold rounded-lg hover:bg-gold hover:text-black transition">立即試算</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 流程板塊 -->
+    <section id="process" class="py-20 px-4">
+        <div class="max-w-5xl mx-auto">
+            <h2 class="text-3xl font-bold text-center mb-16 text-gold">三步輕鬆完成申貸</h2>
+            <div class="relative">
+                <div class="hidden md:block absolute top-1/2 left-0 w-full h-1 bg-gold/20 -translate-y-1/2"></div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-12 relative z-10">
+                    <div class="text-center bg-dark-bg p-6">
+                        <div class="w-16 h-16 bg-gold text-black rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-6">1</div>
+                        <h4 class="text-xl font-bold mb-2">線上預約諮詢</h4>
+                        <p class="text-gray-400">填寫表單或致電，由專業顧問為您評估方案。</p>
+                    </div>
+                    <div class="text-center bg-dark-bg p-6">
+                        <div class="w-16 h-16 bg-gold text-black rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-6">2</div>
+                        <h4 class="text-xl font-bold mb-2">資產價值評估</h4>
+                        <p class="text-gray-400">快速現場看車看屋，核定最高額度與低利條件。</p>
+                    </div>
+                    <div class="text-center bg-dark-bg p-6">
+                        <div class="w-16 h-16 bg-gold text-black rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-6">3</div>
+                        <h4 class="text-xl font-bold mb-2">簽約撥款</h4>
+                        <p class="text-gray-400">合約內容清楚透明，當日撥款至指定帳戶。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 聯絡表單 -->
+    <section id="contact" class="py-20 bg-card-bg px-4">
+        <div class="max-w-4xl mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+                <div>
+                    <h2 class="text-3xl font-bold text-gold mb-6">立即預約專業諮詢</h2>
+                    <p class="text-gray-400 mb-8">我們深知您的每一分資金都至關重要。請留下您的資訊，品祐團隊將於 24 小時內與您聯繫。</p>
+                    <div class="space-y-4">
+                        <div class="flex items-center text-gray-300">
+                            <i class="fas fa-phone text-gold w-8"></i>
+                            <span>(02) 2345-6789</span>
+                        </div>
+                        <div class="flex items-center text-gray-300">
+                            <i class="fas fa-location-dot text-gold w-8"></i>
+                            <span>台北市信義區忠孝東路一段 88 號</span>
+                        </div>
+                        <div class="flex items-center text-gray-300">
+                            <i class="fas fa-clock text-gold w-8"></i>
+                            <span>週一至週五 09:00 - 18:00</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-black p-8 rounded-2xl border border-gold/30">
+                    <form onsubmit="return handleFormSubmit(event)">
+                        <div class="mb-4">
+                            <label class="block text-sm mb-2">您的姓名</label>
+                            <input type="text" class="w-full bg-gray-900 border border-gray-800 p-3 rounded focus:border-gold outline-none" required>
+                        </div>
+                        <div class="mb-4">
+                            <label class="block text-sm mb-2">聯絡電話</label>
+                            <input type="tel" class="w-full bg-gray-900 border border-gray-800 p-3 rounded focus:border-gold outline-none" required>
+                        </div>
+                        <div class="mb-4">
+                            <label class="block text-sm mb-2">需求項目</label>
+                            <select class="w-full bg-gray-900 border border-gray-800 p-3 rounded focus:border-gold outline-none">
+                                <option>汽車融資</option>
+                                <option>房屋/土地融資</option>
+                                <option>企業週轉</option>
+                                <option>其他諮詢</option>
+                            </select>
+                        </div>
+                        <div class="mb-6">
+                            <label class="block text-sm mb-2">簡述您的需求（非必填）</label>
+                            <textarea class="w-full bg-gray-900 border border-gray-800 p-3 rounded h-32 focus:border-gold outline-none"></textarea>
+                        </div>
+                        <button type="submit" class="w-full bg-gold text-black font-bold py-4 rounded hover:bg-yellow-500 transition shadow-lg">送出申請</button>
+                    </form>
+                    <div id="success-msg" class="hidden mt-4 text-center p-3 bg-green-900/50 text-green-400 rounded">
+                        您的訊息已送出，我們將儘速聯繫您！
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 頁腳 -->
+    <footer class="py-12 border-t border-gray-800 text-center">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="text-gold font-bold text-xl mb-4">品祐租賃有限公司</div>
+            <p class="text-gray-500 text-sm mb-8">
+                &copy; 2024 PIN YOU LEASING. All Rights Reserved. <br>
+                警語：借貸請適度，確保未來還款計畫無虞。本公司嚴守相關法律規範。
+            </p>
+            <div class="flex justify-center space-x-6">
+                <a href="#" class="text-gray-400 hover:text-gold"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" class="text-gray-400 hover:text-gold"><i class="fab fa-line text-xl"></i></a>
             </div>
         </div>
     </footer>
 
-    <!-- Google 表單彈窗 -->
-    <div id="form-modal" onclick="closeModal()">
-        <div class="form-container" onclick="event.stopPropagation()">
-            <!-- 關閉按鈕 -->
-            <button onclick="closeModal()" class="absolute top-4 right-4 bg-black/80 hover:bg-black text-white w-10 h-10 rounded-full flex items-center justify-center z-50 border border-white/10 transition-transform active:scale-90 shadow-2xl">
-                <i data-lucide="x" class="w-5 h-5"></i>
-            </button>
-            
-            <!-- iframe 嵌入 -->
-            <div class="w-full h-full overflow-hidden">
-                <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSc3YXhVET54zmeTPvV5nUCVSR-w6ZHKh3fj_RQP9uV7GVyb_Q/viewform?embedded=true" width="100%" height="100%" frameborder="0" marginheight="0" marginwidth="0">載入中…</iframe>
-            </div>
-        </div>
-    </div>
-
     <script>
-        // 初始化 Lucide 圖標
-        function initIcons() {
-            if (window.lucide) {
-                window.lucide.createIcons();
-            } else {
-                setTimeout(initIcons, 100);
-            }
-        }
-        window.onload = initIcons;
-
-        // 彈窗控制
-        const modal = document.getElementById('form-modal');
-        function openModal() {
-            modal.style.display = 'flex';
-            document.body.style.overflow = 'hidden'; // 防止背景滾動
-            initIcons(); // 確保彈窗內圖標渲染
+        function scrollToContact() {
+            document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });
         }
 
-        function closeModal() {
-            modal.style.display = 'none';
-            document.body.style.overflow = 'auto';
+        function handleFormSubmit(e) {
+            e.preventDefault();
+            const successMsg = document.getElementById('success-msg');
+            successMsg.classList.remove('hidden');
+            e.target.reset();
+            setTimeout(() => {
+                successMsg.classList.add('hidden');
+            }, 5000);
+            return false;
         }
-
-        // 監聽 ESC 鍵關閉彈窗
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') closeModal();
-        });
-
-        // 捲動時 Header 效果
-        window.addEventListener('scroll', () => {
-            const header = document.querySelector('header');
-            if (window.scrollY > 50) {
-                header.style.backgroundColor = 'rgba(5, 5, 5, 0.95)';
-                header.style.paddingBlock = '0.5rem';
-            } else {
-                header.style.backgroundColor = '';
-                header.style.paddingBlock = '';
-            }
-        });
     </script>
 </body>
 </html>
