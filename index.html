@@ -1,0 +1,263 @@
+import React, { useState, useEffect } from 'react';
+import { MessageSquare, Calculator, ShieldCheck, ArrowRight, X, Sparkles, Send, Phone } from 'lucide-react';
+
+const App = () => {
+  const [activeTab, setActiveTab] = useState('home');
+  const [scrolled, setScrolled] = useState(false);
+  
+  // AI 相關狀態
+  const [aiOpen, setAiOpen] = useState(false);
+  const [aiInput, setAiInput] = useState("");
+  const [aiResponse, setAiResponse] = useState("");
+  const [isAiLoading, setIsAiLoading] = useState(false);
+  const [chatHistory, setChatHistory] = useState([]);
+
+  const apiKey = ""; // 執行環境自動提供
+
+  useEffect(() => {
+    const handleScroll = () => setScrolled(window.scrollY > 20);
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  // Gemini API 調用邏輯
+  const askGemini = async () => {
+    if (!aiInput.trim()) return;
+    
+    const userMsg = { role: 'user', text: aiInput };
+    setChatHistory(prev => [...prev, userMsg]);
+    setAiInput("");
+    setIsAiLoading(true);
+
+    const systemPrompt = `
+      你是一位「品祐租賃」公司的 AI 金融助理。
+      公司背景：深耕雲嘉南地區（雲林、嘉義、台南），專營汽車融資、機車周轉、3C質押與無卡分期。
+      核心價值：保護債權人利益、降低社會資源浪費、建構專業風控。
+      風格：專業、沈穩、果斷，像是一位資深的金融風控主管。
+      任務：
+      1. 協助客戶進行初步利息概算（提醒客戶這僅為 AI 模擬，實際以專員核定為準）。
+      2. 評估資產價值（汽車、機車、3C產品）。
+      3. 堅守法律規範，回覆內容需體現對風控的嚴謹性。
+      請用繁體中文回答，並適時使用「✨」與「🛡️」標誌。
+    `;
+
+    try {
+      let delay = 1000;
+      let success = false;
+      for (let i = 0; i < 5; i++) {
+        try {
+          const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              contents: [{ parts: [{ text: aiInput }] }],
+              systemInstruction: { parts: [{ text: systemPrompt }] }
+            })
+          });
+          
+          if (!response.ok) throw new Error('Retry');
+          
+          const data = await response.json();
+          const text = data.candidates?.[0]?.content?.parts?.[0]?.text;
+          setChatHistory(prev => [...prev, { role: 'ai', text: text }]);
+          success = true;
+          break;
+        } catch (err) {
+          await new Promise(resolve => setTimeout(resolve, delay));
+          delay *= 2;
+        }
+      }
+      if (!success) throw new Error();
+    } catch (error) {
+      setChatHistory(prev => [...prev, { role: 'ai', text: "抱歉，目前系統繁忙。請直接撥打 0917-769-309 聯繫珺珺專員，我們將立即為您處理。" }]);
+    } finally {
+      setIsAiLoading(false);
+    }
+  };
+
+  const CONTACT_INFO = {
+    phone: "0917-769-309",
+    lineLink: "https://line.me/ti/p/t8gvkEN7jA",
+    lineId: "im9309"
+  };
+
+  return (
+    <div className="min-h-screen bg-[#050505] text-slate-300 font-sans selection:bg-amber-500/30">
+      {/* 導航欄 */}
+      <nav className={`fixed top-0 w-full z-50 transition-all duration-500 ${scrolled ? 'bg-black/90 backdrop-blur-md py-3 border-b border-amber-900/20' : 'bg-transparent py-6'}`}>
+        <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
+          <div className="flex items-center gap-2 group cursor-pointer" onClick={() => setActiveTab('home')}>
+            <div className="w-10 h-10 bg-amber-600 rounded-lg flex items-center justify-center font-black text-black italic">PY</div>
+            <span className="text-white font-black tracking-tighter text-xl italic group-hover:text-amber-500 transition-colors">品祐租賃</span>
+          </div>
+          
+          <div className="hidden md:flex items-center gap-8">
+            <button onClick={() => setActiveTab('home')} className={`text-xs font-bold tracking-widest uppercase ${activeTab === 'home' ? 'text-amber-500' : 'hover:text-white'}`}>首頁導覽</button>
+            <button onClick={() => setAiOpen(true)} className="text-xs font-bold tracking-widest uppercase hover:text-amber-500 flex items-center gap-2">
+              <Sparkles size={14} className="text-amber-500" /> AI 試算
+            </button>
+            <a href={CONTACT_INFO.lineLink} target="_blank" className="bg-amber-600 text-black px-6 py-2.5 rounded-full text-xs font-black tracking-widest hover:bg-amber-500 transition-all active:scale-95 shadow-lg shadow-amber-900/20">
+              對接專員
+            </a>
+          </div>
+        </div>
+      </nav>
+
+      {/* 主內容區 */}
+      {activeTab === 'home' ? (
+        <main className="pt-20">
+          {/* Hero Section */}
+          <section className="relative min-h-[90vh] flex items-center justify-center px-6 overflow-hidden">
+            <div className="absolute top-1/4 -left-20 w-[600px] h-[600px] bg-amber-600/5 blur-[120px] rounded-full animate-pulse"></div>
+            <div className="absolute bottom-1/4 -right-20 w-[500px] h-[500px] bg-blue-600/5 blur-[120px] rounded-full animate-pulse"></div>
+            
+            <div className="max-w-5xl mx-auto text-center relative z-10">
+              <div className="inline-flex items-center gap-2 px-4 py-2 bg-amber-900/20 border border-amber-500/20 rounded-full text-amber-500 text-[10px] font-black tracking-[0.3em] uppercase mb-8">
+                <ShieldCheck size={14} /> 雲嘉南資產風控權威
+              </div>
+              <h1 className="text-5xl md:text-8xl font-black text-white mb-8 italic tracking-tighter leading-none">
+                精準資本調度<br/>
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-amber-700">守護債權價值</span>
+              </h1>
+              <p className="text-slate-400 text-lg md:text-xl mb-12 max-w-2xl mx-auto leading-relaxed font-medium">
+                深耕雲嘉南地區，我們不只是租賃公司。透過 AI 數據模型與專業法務監辦，為您的資產提供最穩健的流動性方案。
+              </p>
+              
+              <div className="flex flex-col sm:flex-row justify-center gap-5">
+                <button 
+                  onClick={() => setAiOpen(true)}
+                  className="group bg-white/5 border border-white/10 text-white px-10 py-5 rounded-2xl font-black text-sm tracking-widest hover:bg-white/10 transition-all flex items-center justify-center gap-3"
+                >
+                  <Sparkles className="text-amber-500 group-hover:animate-spin" size={18} />
+                  啟動 AI 智能試算
+                </button>
+                <a 
+                  href={CONTACT_INFO.lineLink}
+                  target="_blank"
+                  className="bg-amber-600 text-black px-12 py-5 rounded-2xl font-black text-sm tracking-widest hover:bg-amber-500 hover:scale-105 transition-all shadow-2xl shadow-amber-900/40 flex items-center justify-center gap-2"
+                >
+                  立即聯繫珺珺專員 <ArrowRight size={18} />
+                </a>
+              </div>
+            </div>
+          </section>
+
+          {/* 服務卡片 */}
+          <section className="py-24 px-6 bg-[#080808]">
+            <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
+              {[
+                { title: "汽車融資", desc: "不限車齡，免留車。雲嘉南地區最高核貸額度，最快當日撥款。", icon: "🚗" },
+                { title: "機車周轉", desc: "學生、職軍、社會人士皆可辦。流程極簡，解決您的一時之需。", icon: "🛵" },
+                { title: "3C 精質押", desc: "專業 3C 估價系統，針對高單價手機、筆電提供最優質押方案。", icon: "💻" }
+              ].map((s, i) => (
+                <div key={i} className="group p-10 bg-[#0c0c0c] border border-white/5 rounded-[2.5rem] hover:border-amber-500/30 transition-all duration-500">
+                  <div className="text-4xl mb-6 group-hover:scale-110 transition-transform">{s.icon}</div>
+                  <h3 className="text-xl font-black text-white mb-4 italic tracking-tight group-hover:text-amber-500 transition-colors">{s.title}</h3>
+                  <p className="text-slate-500 text-sm leading-relaxed">{s.desc}</p>
+                </div>
+              ))}
+            </div>
+          </section>
+        </main>
+      ) : null}
+
+      {/* AI 側邊對話視窗 */}
+      {aiOpen && (
+        <div className="fixed inset-0 z-[100] flex justify-end">
+          <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setAiOpen(false)}></div>
+          <div className="relative w-full max-w-lg bg-[#0f0f0f] h-full shadow-2xl border-l border-white/10 flex flex-col animate-in slide-in-from-right duration-500">
+            {/* Header */}
+            <div className="p-6 border-b border-white/10 flex justify-between items-center bg-black/50">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 bg-amber-600/20 rounded-xl flex items-center justify-center text-amber-500">
+                  <Sparkles size={20} />
+                </div>
+                <div>
+                  <h3 className="text-white font-black italic">品祐 AI 金融助理</h3>
+                  <p className="text-[10px] text-amber-500/60 font-bold tracking-widest uppercase">Intelligent Risk Control</p>
+                </div>
+              </div>
+              <button onClick={() => setAiOpen(false)} className="text-slate-500 hover:text-white transition-colors">
+                <X size={24} />
+              </button>
+            </div>
+
+            {/* Chat Body */}
+            <div className="flex-1 overflow-y-auto p-6 space-y-6">
+              {chatHistory.length === 0 && (
+                <div className="text-center py-10">
+                  <div className="w-16 h-16 bg-amber-600/10 rounded-full flex items-center justify-center mx-auto mb-4 text-amber-500">
+                    <Calculator size={32} />
+                  </div>
+                  <h4 className="text-white font-bold mb-2 text-lg">您好，我是品祐 AI 助理</h4>
+                  <p className="text-slate-500 text-sm px-10">您可以詢問我關於雲嘉南地區的汽車分期、機車借款或是 3C 質押的初步試算。</p>
+                </div>
+              )}
+              
+              {chatHistory.map((chat, i) => (
+                <div key={i} className={`flex ${chat.role === 'user' ? 'justify-end' : 'justify-start'}`}>
+                  <div className={`max-w-[85%] p-4 rounded-2xl text-sm leading-relaxed ${
+                    chat.role === 'user' 
+                    ? 'bg-amber-600 text-black font-bold' 
+                    : 'bg-white/5 text-slate-300 border border-white/10'
+                  }`}>
+                    <div className="whitespace-pre-wrap">{chat.text}</div>
+                  </div>
+                </div>
+              ))}
+              
+              {isAiLoading && (
+                <div className="flex justify-start">
+                  <div className="bg-white/5 p-4 rounded-2xl flex gap-1">
+                    <span className="w-1.5 h-1.5 bg-amber-500 rounded-full animate-bounce"></span>
+                    <span className="w-1.5 h-1.5 bg-amber-500 rounded-full animate-bounce [animation-delay:0.2s]"></span>
+                    <span className="w-1.5 h-1.5 bg-amber-500 rounded-full animate-bounce [animation-delay:0.4s]"></span>
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {/* Input Area */}
+            <div className="p-6 bg-black/50 border-t border-white/10">
+              <div className="flex gap-2">
+                <input 
+                  type="text"
+                  value={aiInput}
+                  onChange={(e) => setAiInput(e.target.value)}
+                  onKeyDown={(e) => e.key === 'Enter' && askGemini()}
+                  placeholder="請輸入您的資產狀況或欲試算金額..."
+                  className="flex-1 bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm focus:border-amber-500 outline-none transition-all placeholder:text-slate-600"
+                />
+                <button 
+                  onClick={askGemini}
+                  disabled={isAiLoading || !aiInput.trim()}
+                  className="bg-amber-600 text-black p-3 rounded-xl hover:bg-amber-500 disabled:opacity-50 transition-all shadow-lg shadow-amber-900/20"
+                >
+                  <Send size={20} />
+                </button>
+              </div>
+              <div className="mt-4 flex justify-between items-center text-[10px] text-slate-600 font-bold uppercase tracking-widest">
+                <span>AI 模擬結果僅供參考</span>
+                <a href={CONTACT_INFO.lineLink} target="_blank" className="text-amber-500 flex items-center gap-1 hover:underline">
+                  <Phone size={10} /> 聯繫珺珺專員
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* 底部 Footer */}
+      <footer className="py-20 bg-black border-t border-white/5 px-6">
+        <div className="max-w-7xl mx-auto text-center">
+          <div className="text-amber-600 font-black italic text-2xl mb-4">品祐租賃</div>
+          <p className="text-[10px] text-slate-700 font-black tracking-[0.4em] uppercase">
+            Pin You Leasing © 2026 · 雲嘉南資產融資權威 · 專業風控與債權保護
+          </p>
+        </div>
+      </footer>
+    </div>
+  );
+};
+
+export default App;
