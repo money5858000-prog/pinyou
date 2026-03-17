@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>品祐租賃 | 精準資本調度與 AI 風控</title>
+    <title>品祐租賃 | 數位債權與 AI 風控</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;700;900&display=swap" rel="stylesheet">
-    <!-- 引入 Lucide 圖標庫 -->
+    <!-- 核心圖標庫 -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lucide/0.263.0/umd/lucide.min.js"></script>
     <style>
         body {
@@ -14,10 +14,7 @@
             background-color: #050505;
             color: #f3f4f6;
             margin: 0;
-        }
-
-        .gold-glow {
-            box-shadow: 0 0 25px rgba(245, 158, 11, 0.2);
+            overflow-x: hidden;
         }
 
         .gold-text {
@@ -27,180 +24,211 @@
         }
 
         .glass-header {
-            background: rgba(10, 10, 10, 0.85);
-            backdrop-filter: blur(12px);
+            background: rgba(10, 10, 10, 0.8);
+            backdrop-filter: blur(15px);
             border-bottom: 1px solid rgba(251, 191, 36, 0.1);
         }
 
-        .ai-chat-box {
-            background: rgba(20, 20, 20, 0.9);
-            border: 1px solid rgba(251, 191, 36, 0.2);
-            border-radius: 20px;
+        .card-gradient {
+            background: linear-gradient(180deg, rgba(24, 24, 27, 0.8) 0%, rgba(10, 10, 10, 1) 100%);
+            border: 1px solid rgba(251, 191, 36, 0.1);
         }
 
-        .logo-hover {
-            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-        .logo-hover:hover {
-            transform: scale(1.05);
+        /* 表單彈窗優化 */
+        #form-modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+            padding: 15px;
+            align-items: center;
+            justify-content: center;
         }
         
-        /* 滾動條美化 */
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: #050505; }
-        ::-webkit-scrollbar-thumb { background: #333; border-radius: 10px; }
-        ::-webkit-scrollbar-thumb:hover { background: #d97706; }
-
-        .animate-pulse-slow {
-            animation: pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: .8; }
-        }
-
-        /* 表單容器響應式處理 */
         .form-container {
+            width: 100%;
+            max-width: 850px;
+            height: 90vh;
+            background: #ffffff;
+            border-radius: 20px;
+            overflow: hidden;
+            position: relative;
+            box-shadow: 0 25px 50px -12px rgba(251, 191, 36, 0.25);
+        }
+
+        .btn-shine {
             position: relative;
             overflow: hidden;
-            width: 100%;
-            padding-top: 150%; /* 高度比例調整 */
-            border-radius: 15px;
         }
-        @media (min-width: 768px) {
-            .form-container { padding-top: 80%; }
-        }
-        .form-container iframe {
+        .btn-shine::after {
+            content: "";
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            border: 0;
+            top: -50%; left: -50%;
+            width: 200%; height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.3), transparent);
+            transform: rotate(45deg);
+            transition: 0.8s;
+        }
+        .btn-shine:hover::after { left: 100%; top: 100%; }
+
+        @keyframes pulse-slow {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+        .animate-pulse-slow { animation: pulse-slow 3s infinite; }
+        
+        iframe {
+            background-color: #ffffff;
         }
     </style>
 </head>
 <body class="selection:bg-amber-500/30">
 
-    <!-- 導覽列 -->
-    <header class="fixed top-0 w-full z-50 glass-header">
-        <div class="max-w-7xl mx-auto px-4 h-20 flex justify-between items-center">
-            <div class="flex items-center gap-3">
-                <img src="S__99287044_0.jpg" alt="品祐租賃 LOGO" class="h-12 w-auto rounded-lg logo-hover" onerror="this.src='https://via.placeholder.com/50?text=P'">
-                <div class="flex flex-col">
-                    <span class="text-xl font-black tracking-tighter gold-text">品祐租賃</span>
-                    <span class="text-[8px] text-gray-500 tracking-[0.3em] font-bold uppercase">Pin You Leasing</span>
+    <!-- 頂部導覽列 -->
+    <header class="fixed top-0 w-full z-50 glass-header transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex justify-between items-center">
+            <div class="flex items-center gap-4">
+                <img src="S__99287044_0.jpg" alt="品祐租賃" class="h-10 w-auto rounded-lg shadow-lg shadow-amber-900/20" onerror="this.src='https://via.placeholder.com/40?text=PY'">
+                <div class="hidden sm:block">
+                    <div class="text-lg font-black gold-text leading-none tracking-tight">品祐租賃</div>
+                    <div class="text-[8px] text-zinc-500 tracking-[0.2em] mt-1 font-bold">PIN YOU ASSET MANAGEMENT</div>
                 </div>
             </div>
             
-            <nav class="hidden md:flex gap-8 text-[11px] font-bold tracking-widest text-gray-400">
-                <a href="#" class="text-amber-500">首頁 / HOME</a>
-                <a href="#services" class="hover:text-white transition-colors">融資服務 / SERVICES</a>
-                <a href="#application" class="hover:text-white transition-colors">線上申請 / APPLY</a>
-            </nav>
-
-            <button onclick="window.open('https://line.me/ti/p/t8gvkEN7jA')" class="bg-[#06C755] hover:bg-[#05b34c] text-white px-5 py-2.5 rounded-full text-[10px] font-bold flex items-center gap-2 transition-all active:scale-95">
-                <i data-lucide="message-square" class="w-4 h-4 text-white"></i>
-                線上審核專員
-            </button>
+            <div class="flex items-center gap-4 md:gap-8">
+                <a href="tel:0917769309" class="text-xs text-zinc-400 hover:text-amber-500 transition-colors hidden md:flex items-center gap-2">
+                    <i data-lucide="phone-call" class="w-3 h-3 text-amber-500"></i> 0917-769-309
+                </a>
+                <button onclick="openModal()" class="btn-shine bg-amber-500 hover:bg-amber-400 text-black px-8 py-3 rounded-full text-xs font-black transition-all active:scale-95 shadow-lg shadow-amber-500/20">
+                    立即申請
+                </button>
+            </div>
         </div>
     </header>
 
-    <main class="pt-20">
-        <!-- 英雄區 -->
-        <section class="relative min-h-[70vh] flex flex-col items-center justify-center px-6 overflow-hidden">
-            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-amber-600/10 rounded-full blur-[120px] -z-10"></div>
-            <img src="S__99287044_0.jpg" alt="品祐核心 LOGO" class="w-48 md:w-64 mb-8 rounded-2xl gold-glow animate-pulse-slow" onerror="this.src='https://via.placeholder.com/300?text=Pin+You'">
-            <h1 class="text-4xl md:text-6xl font-black text-center mb-6 leading-tight">
-                資產活化 <span class="gold-text">高效審核</span>
+    <!-- 英雄區 (Hero Section) -->
+    <section class="relative pt-44 pb-32 px-6 overflow-hidden">
+        <!-- 裝飾背景 -->
+        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full pointer-events-none">
+            <div class="absolute top-20 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-amber-500/10 rounded-full blur-[120px]"></div>
+        </div>
+
+        <div class="max-w-7xl mx-auto text-center relative z-10">
+            <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-amber-500/20 bg-amber-500/5 mb-12">
+                <span class="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse-slow"></span>
+                <span class="text-[10px] text-amber-500 font-bold tracking-widest uppercase">Precision Risk Intelligence System</span>
+            </div>
+            
+            <h1 class="text-5xl md:text-8xl font-black mb-10 leading-[1] tracking-tighter">
+                賦予債權 <br><span class="gold-text">全新價值</span>
             </h1>
-            <p class="text-gray-400 text-center max-w-2xl mb-8 text-sm md:text-base tracking-wide">
-                深耕雲嘉南，致力於建立最透明的債權回收與資產媒合系統。
+            
+            <p class="text-zinc-500 text-base md:text-xl max-w-2xl mx-auto mb-20 leading-relaxed font-light">
+                我們運用數位化技術重新定義資產管理，為債權人與企業提供最快、最精準的資本回收解決方案，保護您的利益，降低資源浪費。
             </p>
-        </section>
-
-        <!-- Google 表單申請區塊 -->
-        <section id="application" class="py-16 px-6 bg-zinc-950">
-            <div class="max-w-4xl mx-auto">
-                <div class="text-center mb-12">
-                    <h2 class="text-2xl font-black gold-text mb-4">線上初步審核表單</h2>
-                    <p class="text-gray-500 text-sm">請填寫下方資訊，系統將自動啟動 AI 風控初步篩選，專員將於 15 分鐘內與您聯繫。</p>
+            
+            <!-- 核心功能卡片 -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+                <div class="card-gradient p-10 rounded-[32px] text-left hover:border-amber-500/40 transition-all cursor-pointer group" onclick="openModal()">
+                    <div class="w-14 h-14 rounded-2xl bg-amber-500/10 flex items-center justify-center mb-8 group-hover:bg-amber-500/20 transition-colors">
+                        <i data-lucide="shield-check" class="w-7 h-7 text-amber-500"></i>
+                    </div>
+                    <h3 class="font-bold text-xl text-white mb-3">極速審核</h3>
+                    <p class="text-sm text-zinc-500 leading-relaxed">線上進件，AI初步風控過濾，大幅縮短資本等待時間，加速資金回籠。</p>
                 </div>
 
-<iframe src="https://docs.google.com/forms/d/e/1FAIpQLSc3YXhVET54zmeTPvV5nUCVSR-w6ZHKh3fj_RQP9uV7GVyb_Q/viewform?embedded=true" width="640" height="779" frameborder="0" marginheight="0" marginwidth="0">載入中…</iframe>                    <div class="form-container">
-                        <!-- 請在此處替換您的 Google 表單連結 -->
-                        <!-- 獲取方式：Google 表單右上方「傳送」>「<> 嵌入 HTML」> 複製 src 網址 -->
-                        <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSeX_Y5_5uY_y-9G8S_UvO6n7-S-n7v0E-yX_Y5_5uY_y-9G8S/viewform?embedded=true">載入中…</iframe>
+                <div class="card-gradient p-10 rounded-[32px] text-left hover:border-amber-500/40 transition-all cursor-pointer group" onclick="window.open('https://line.me/ti/p/t8gvkEN7jA')">
+                    <div class="w-14 h-14 rounded-2xl bg-amber-500/10 flex items-center justify-center mb-8 group-hover:bg-amber-500/20 transition-colors">
+                        <i data-lucide="message-square" class="w-7 h-7 text-amber-500"></i>
                     </div>
+                    <h3 class="font-bold text-xl text-white mb-3">專業對接</h3>
+                    <p class="text-sm text-zinc-500 leading-relaxed">專屬顧問一對一處理各類疑難雜症，確保案件流程順暢且具備隱私。</p>
                 </div>
-                
-                <div class="mt-8 text-center">
-                    <p class="text-zinc-600 text-[10px] uppercase tracking-widest">
-                        * 您的資料僅用於資產審核，受品祐法律團隊嚴格保密協議保護 *
-                    </p>
-                </div>
-            </div>
-        </section>
 
-        <!-- 服務項目區 -->
-        <section id="services" class="py-24 px-6 bg-[#080808]">
-            <div class="max-w-7xl mx-auto">
-                <h2 class="text-2xl font-black mb-16 tracking-widest border-l-4 border-amber-500 pl-6 uppercase">
-                    專業核心服務 / CORE SERVICES
-                </h2>
-                
-                <div class="grid md:grid-cols-3 gap-6">
-                    <div class="bg-zinc-900/40 p-8 rounded-3xl border border-zinc-800 hover:border-amber-500/40 transition-all group">
-                        <i data-lucide="car" class="w-10 h-10 text-amber-500 mb-6 group-hover:scale-110 transition-transform"></i>
-                        <h4 class="font-bold text-lg mb-3">車輛資產融資</h4>
-                        <p class="text-gray-500 text-xs leading-relaxed">針對各類車輛債權提供流動性方案，快速回收資本，降低持有風險。</p>
+                <div class="card-gradient p-10 rounded-[32px] text-left hover:border-amber-500/40 transition-all cursor-pointer group">
+                    <div class="w-14 h-14 rounded-2xl bg-amber-500/10 flex items-center justify-center mb-8 group-hover:bg-amber-500/20 transition-colors">
+                        <i data-lucide="gantt-chart" class="w-7 h-7 text-amber-500"></i>
                     </div>
-                    <div class="bg-zinc-900/40 p-8 rounded-3xl border border-zinc-800 hover:border-amber-500/40 transition-all group">
-                        <i data-lucide="shield-alert" class="w-10 h-10 text-amber-500 mb-6 group-hover:scale-110 transition-transform"></i>
-                        <h4 class="font-bold text-lg mb-3">風險資產監控</h4>
-                        <p class="text-gray-500 text-xs leading-relaxed">AI 監控還款模型，預判風險節點，在違約發生前啟動預警機制。</p>
-                    </div>
-                    <div class="bg-zinc-900/40 p-8 rounded-3xl border border-zinc-800 hover:border-amber-500/40 transition-all group">
-                        <i data-lucide="gavel" class="w-10 h-10 text-amber-500 mb-6 group-hover:scale-110 transition-transform"></i>
-                        <h4 class="font-bold text-lg mb-3">法律權益保障</h4>
-                        <p class="text-gray-500 text-xs leading-relaxed">由法務專員協助完善每一筆租賃契約，確保債權回收路徑合法高效。</p>
-                    </div>
+                    <h3 class="font-bold text-xl text-white mb-3">合法合規</h3>
+                    <p class="text-sm text-zinc-500 leading-relaxed">專業法律團隊把關，讓每一筆資產流動都具備堅實法律基礎，安全無虞。</p>
                 </div>
             </div>
-        </section>
-    </main>
+        </div>
+    </section>
 
-    <footer class="py-16 bg-black border-t border-zinc-900 px-6">
-        <div class="max-w-7xl mx-auto flex flex-col items-center">
-            <img src="S__99287044_0.jpg" alt="Footer Logo" class="h-10 opacity-30 grayscale hover:grayscale-0 transition-all mb-8" onerror="this.src='https://via.placeholder.com/100x40?text=PINYOU'">
-            <p class="text-zinc-500 text-[10px] tracking-widest uppercase mb-4">品祐租賃有限公司 | 統一編號 93319309</p>
-            <div class="flex gap-6 text-zinc-400 text-xs font-bold">
-                <a href="tel:0917-769-309" class="hover:text-amber-500">TEL: 0917-769-309</a>
-                <a href="https://line.me/ti/p/t8gvkEN7jA" class="hover:text-amber-500">LINE: t8gvkEN7jA</a>
+    <!-- 底部資訊 -->
+    <footer class="py-24 border-t border-zinc-900 bg-black/50">
+        <div class="max-w-7xl mx-auto px-6 text-center">
+            <img src="S__99287044_0.jpg" alt="Logo" class="h-10 w-auto mx-auto mb-8 opacity-40 grayscale hover:grayscale-0 transition-all duration-500">
+            <div class="text-zinc-600 text-[10px] tracking-[0.4em] uppercase mb-12">
+                品祐租賃有限公司 | 統一編號 93319309 | 嘉義市西區
+            </div>
+            <div class="flex justify-center gap-8">
+                <a href="https://line.me/ti/p/t8gvkEN7jA" target="_blank" class="w-12 h-12 rounded-full border border-zinc-800 flex items-center justify-center text-zinc-500 hover:text-amber-500 hover:border-amber-500/50 transition-all">
+                    <i data-lucide="message-circle" class="w-5 h-5"></i>
+                </a>
+                <a href="tel:0917769309" class="w-12 h-12 rounded-full border border-zinc-800 flex items-center justify-center text-zinc-500 hover:text-amber-500 hover:border-amber-500/50 transition-all">
+                    <i data-lucide="phone" class="w-5 h-5"></i>
+                </a>
             </div>
         </div>
     </footer>
 
+    <!-- Google 表單彈窗 -->
+    <div id="form-modal" onclick="closeModal()">
+        <div class="form-container" onclick="event.stopPropagation()">
+            <!-- 關閉按鈕 -->
+            <button onclick="closeModal()" class="absolute top-4 right-4 bg-black/80 hover:bg-black text-white w-10 h-10 rounded-full flex items-center justify-center z-50 border border-white/10 transition-transform active:scale-90 shadow-2xl">
+                <i data-lucide="x" class="w-5 h-5"></i>
+            </button>
+            
+            <!-- iframe 嵌入 -->
+            <div class="w-full h-full overflow-hidden">
+                <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSc3YXhVET54zmeTPvV5nUCVSR-w6ZHKh3fj_RQP9uV7GVyb_Q/viewform?embedded=true" width="100%" height="100%" frameborder="0" marginheight="0" marginwidth="0">載入中…</iframe>
+            </div>
+        </div>
+    </div>
+
     <script>
+        // 初始化 Lucide 圖標
         function initIcons() {
-            if (typeof lucide !== 'undefined') {
-                lucide.createIcons();
+            if (window.lucide) {
+                window.lucide.createIcons();
             } else {
                 setTimeout(initIcons, 100);
             }
         }
+        window.onload = initIcons;
 
-        window.onload = function() {
-            initIcons();
-        };
+        // 彈窗控制
+        const modal = document.getElementById('form-modal');
+        function openModal() {
+            modal.style.display = 'flex';
+            document.body.style.overflow = 'hidden'; // 防止背景滾動
+            initIcons(); // 確保彈窗內圖標渲染
+        }
 
+        function closeModal() {
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        // 監聽 ESC 鍵關閉彈窗
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeModal();
+        });
+
+        // 捲動時 Header 效果
         window.addEventListener('scroll', () => {
             const header = document.querySelector('header');
-            if (window.scrollY > 20) {
-                header.style.background = "rgba(0,0,0,0.95)";
+            if (window.scrollY > 50) {
+                header.style.backgroundColor = 'rgba(5, 5, 5, 0.95)';
+                header.style.paddingBlock = '0.5rem';
             } else {
-                header.style.background = "rgba(10, 10, 10, 0.85)";
+                header.style.backgroundColor = '';
+                header.style.paddingBlock = '';
             }
         });
     </script>
