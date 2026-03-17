@@ -59,6 +59,26 @@
             0%, 100% { opacity: 1; }
             50% { opacity: .8; }
         }
+
+        /* 表單容器響應式處理 */
+        .form-container {
+            position: relative;
+            overflow: hidden;
+            width: 100%;
+            padding-top: 150%; /* 高度比例調整 */
+            border-radius: 15px;
+        }
+        @media (min-width: 768px) {
+            .form-container { padding-top: 80%; }
+        }
+        .form-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
     </style>
 </head>
 <body class="selection:bg-amber-500/30">
@@ -77,7 +97,7 @@
             <nav class="hidden md:flex gap-8 text-[11px] font-bold tracking-widest text-gray-400">
                 <a href="#" class="text-amber-500">首頁 / HOME</a>
                 <a href="#services" class="hover:text-white transition-colors">融資服務 / SERVICES</a>
-                <a href="#ai-trial" class="hover:text-white transition-colors">AI 試算 / AI ANALYTICS</a>
+                <a href="#application" class="hover:text-white transition-colors">線上申請 / APPLY</a>
             </nav>
 
             <button onclick="window.open('https://line.me/ti/p/t8gvkEN7jA')" class="bg-[#06C755] hover:bg-[#05b34c] text-white px-5 py-2.5 rounded-full text-[10px] font-bold flex items-center gap-2 transition-all active:scale-95">
@@ -88,56 +108,37 @@
     </header>
 
     <main class="pt-20">
-        <!-- 英雄區 (Hero Section) -->
-        <section class="relative min-h-[85vh] flex flex-col items-center justify-center px-6 overflow-hidden">
-            <!-- 背景裝飾 -->
+        <!-- 英雄區 -->
+        <section class="relative min-h-[70vh] flex flex-col items-center justify-center px-6 overflow-hidden">
             <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-amber-600/10 rounded-full blur-[120px] -z-10"></div>
-            
-            <img src="S__99287044_0.jpg" alt="品祐核心 LOGO" class="w-64 md:w-80 mb-8 rounded-2xl gold-glow animate-pulse-slow" onerror="this.src='https://via.placeholder.com/300?text=Pin+You+Leasing'">
-            
-            <h1 class="text-4xl md:text-7xl font-black text-center mb-6 leading-tight">
-                精準資本調度<br>
-                <span class="gold-text">守護債權價值</span>
+            <img src="S__99287044_0.jpg" alt="品祐核心 LOGO" class="w-48 md:w-64 mb-8 rounded-2xl gold-glow animate-pulse-slow" onerror="this.src='https://via.placeholder.com/300?text=Pin+You'">
+            <h1 class="text-4xl md:text-6xl font-black text-center mb-6 leading-tight">
+                資產活化 <span class="gold-text">高效審核</span>
             </h1>
-            
-            <p class="text-gray-400 text-center max-w-2xl mb-12 text-sm md:text-base leading-relaxed tracking-wide">
-                深耕雲嘉南地區，我們不只是租賃公司。透過 AI 數據模型與嚴謹風控監控，為您的資產提供最穩健的流動性方案，專業法務團隊確保每一筆債權的合法與效率。
+            <p class="text-gray-400 text-center max-w-2xl mb-8 text-sm md:text-base tracking-wide">
+                深耕雲嘉南，致力於建立最透明的債權回收與資產媒合系統。
             </p>
+        </section>
 
-            <!-- AI 互動試算入口 -->
-            <div id="ai-trial" class="w-full max-w-3xl ai-chat-box p-6 md:p-8 gold-glow">
-                <div class="flex items-center gap-3 mb-6">
-                    <div class="w-2 h-2 rounded-full bg-amber-500 animate-ping"></div>
-                    <span class="text-amber-500 font-bold text-sm tracking-widest uppercase flex items-center gap-2">
-                        <i data-lucide="sparkles" class="w-4 h-4"></i> AI 智能助理
-                    </span>
+        <!-- Google 表單申請區塊 -->
+        <section id="application" class="py-16 px-6 bg-zinc-950">
+            <div class="max-w-4xl mx-auto">
+                <div class="text-center mb-12">
+                    <h2 class="text-2xl font-black gold-text mb-4">線上初步審核表單</h2>
+                    <p class="text-gray-500 text-sm">請填寫下方資訊，系統將自動啟動 AI 風控初步篩選，專員將於 15 分鐘內與您聯繫。</p>
                 </div>
 
-                <div class="space-y-4 mb-8">
-                    <div class="flex gap-4">
-                        <div class="w-8 h-8 rounded-lg bg-amber-500/20 flex items-center justify-center flex-shrink-0">
-                            <i data-lucide="bot" class="w-4 h-4 text-amber-500"></i>
-                        </div>
-                        <div class="bg-zinc-800/50 p-4 rounded-2xl rounded-tl-none text-sm text-gray-300">
-                            您好，我是品祐 AI。請輸入您的融資需求（例如：汽車 50 萬、機車增貸），我將為您進行初步風控評估與額度試算。
-                        </div>
+<iframe src="https://docs.google.com/forms/d/e/1FAIpQLSc3YXhVET54zmeTPvV5nUCVSR-w6ZHKh3fj_RQP9uV7GVyb_Q/viewform?embedded=true" width="640" height="779" frameborder="0" marginheight="0" marginwidth="0">載入中…</iframe>                    <div class="form-container">
+                        <!-- 請在此處替換您的 Google 表單連結 -->
+                        <!-- 獲取方式：Google 表單右上方「傳送」>「<> 嵌入 HTML」> 複製 src 網址 -->
+                        <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSeX_Y5_5uY_y-9G8S_UvO6n7-S-n7v0E-yX_Y5_5uY_y-9G8S/viewform?embedded=true">載入中…</iframe>
                     </div>
                 </div>
-
-                <div class="relative">
-                    <input type="text" id="userInput" placeholder="請輸入需求或資產描述..." 
-                           class="w-full bg-black/50 border border-zinc-800 rounded-xl px-5 py-4 text-white focus:border-amber-500 outline-none transition-all pr-14">
-                    <button onclick="handleAISubmit()" class="absolute right-3 top-1/2 -translate-y-1/2 p-2 text-amber-500 hover:text-amber-400">
-                        <i data-lucide="send" class="w-6 h-6"></i>
-                    </button>
-                </div>
                 
-                <div id="aiResponse" class="mt-4 hidden animate-in fade-in slide-in-from-top-4">
-                    <div class="h-px bg-zinc-800 w-full my-4"></div>
-                    <p id="responseText" class="text-amber-200 text-sm leading-relaxed mb-4 italic"></p>
-                    <a href="https://line.me/ti/p/t8gvkEN7jA" class="inline-flex items-center gap-2 text-xs font-bold text-amber-500 hover:underline">
-                        → 同意以上初估，立即聯繫珺珺專員進入正式審核程序
-                    </a>
+                <div class="mt-8 text-center">
+                    <p class="text-zinc-600 text-[10px] uppercase tracking-widest">
+                        * 您的資料僅用於資產審核，受品祐法律團隊嚴格保密協議保護 *
+                    </p>
                 </div>
             </div>
         </section>
@@ -146,33 +147,24 @@
         <section id="services" class="py-24 px-6 bg-[#080808]">
             <div class="max-w-7xl mx-auto">
                 <h2 class="text-2xl font-black mb-16 tracking-widest border-l-4 border-amber-500 pl-6 uppercase">
-                    資產流動性方案 / Asset Solutions
+                    專業核心服務 / CORE SERVICES
                 </h2>
                 
-                <div class="grid md:grid-cols-4 gap-6">
-                    <!-- 汽車 -->
+                <div class="grid md:grid-cols-3 gap-6">
                     <div class="bg-zinc-900/40 p-8 rounded-3xl border border-zinc-800 hover:border-amber-500/40 transition-all group">
                         <i data-lucide="car" class="w-10 h-10 text-amber-500 mb-6 group-hover:scale-110 transition-transform"></i>
-                        <h4 class="font-bold text-lg mb-3">汽車融資</h4>
-                        <p class="text-gray-500 text-xs leading-relaxed">不限工種、免留車。雲嘉南地區最高核貸額度，最快當日撥款。</p>
+                        <h4 class="font-bold text-lg mb-3">車輛資產融資</h4>
+                        <p class="text-gray-500 text-xs leading-relaxed">針對各類車輛債權提供流動性方案，快速回收資本，降低持有風險。</p>
                     </div>
-                    <!-- 機車 -->
                     <div class="bg-zinc-900/40 p-8 rounded-3xl border border-zinc-800 hover:border-amber-500/40 transition-all group">
-                        <i data-lucide="bike" class="w-10 h-10 text-amber-500 mb-6 group-hover:scale-110 transition-transform"></i>
-                        <h4 class="font-bold text-lg mb-3">機車增貸</h4>
-                        <p class="text-gray-500 text-xs leading-relaxed">學生、國軍、社會人士皆可辦理。免徵信、不看信用瑕疵。</p>
+                        <i data-lucide="shield-alert" class="w-10 h-10 text-amber-500 mb-6 group-hover:scale-110 transition-transform"></i>
+                        <h4 class="font-bold text-lg mb-3">風險資產監控</h4>
+                        <p class="text-gray-500 text-xs leading-relaxed">AI 監控還款模型，預判風險節點，在違約發生前啟動預警機制。</p>
                     </div>
-                    <!-- 3C -->
                     <div class="bg-zinc-900/40 p-8 rounded-3xl border border-zinc-800 hover:border-amber-500/40 transition-all group">
-                        <i data-lucide="smartphone" class="w-10 h-10 text-amber-500 mb-6 group-hover:scale-110 transition-transform"></i>
-                        <h4 class="font-bold text-lg mb-3">數位資產</h4>
-                        <p class="text-gray-500 text-xs leading-relaxed">高階手機、電競筆電。專屬估價系統，針對 3C 提供極速週轉。</p>
-                    </div>
-                    <!-- 風控 -->
-                    <div class="bg-zinc-900/40 p-8 rounded-3xl border border-zinc-800 hover:border-amber-500/40 transition-all group">
-                        <i data-lucide="shield-check" class="w-10 h-10 text-amber-500 mb-6 group-hover:scale-110 transition-transform"></i>
-                        <h4 class="font-bold text-lg mb-3">債權保障</h4>
-                        <p class="text-gray-500 text-xs leading-relaxed">專業法務團隊與 AI 監控，最大化保護債權利益並降低風險損失。</p>
+                        <i data-lucide="gavel" class="w-10 h-10 text-amber-500 mb-6 group-hover:scale-110 transition-transform"></i>
+                        <h4 class="font-bold text-lg mb-3">法律權益保障</h4>
+                        <p class="text-gray-500 text-xs leading-relaxed">由法務專員協助完善每一筆租賃契約，確保債權回收路徑合法高效。</p>
                     </div>
                 </div>
             </div>
@@ -182,71 +174,32 @@
     <footer class="py-16 bg-black border-t border-zinc-900 px-6">
         <div class="max-w-7xl mx-auto flex flex-col items-center">
             <img src="S__99287044_0.jpg" alt="Footer Logo" class="h-10 opacity-30 grayscale hover:grayscale-0 transition-all mb-8" onerror="this.src='https://via.placeholder.com/100x40?text=PINYOU'">
-            <div class="flex flex-wrap justify-center gap-8 text-[10px] font-bold tracking-[0.3em] text-zinc-600 uppercase mb-8">
-                <span>雲林支點</span>
-                <span>嘉義支點</span>
-                <span>台南支點</span>
-            </div>
             <p class="text-zinc-500 text-[10px] tracking-widest uppercase mb-4">品祐租賃有限公司 | 統一編號 93319309</p>
-            <div class="flex gap-6 text-zinc-400 text-xs">
-                <a href="tel:0917-769-309" class="hover:text-amber-500 transition-colors">TEL: 0917-769-309</a>
-                <a href="https://line.me/ti/p/t8gvkEN7jA" class="hover:text-amber-500 transition-colors">LINE: t8gvkEN7jA</a>
+            <div class="flex gap-6 text-zinc-400 text-xs font-bold">
+                <a href="tel:0917-769-309" class="hover:text-amber-500">TEL: 0917-769-309</a>
+                <a href="https://line.me/ti/p/t8gvkEN7jA" class="hover:text-amber-500">LINE: t8gvkEN7jA</a>
             </div>
         </div>
     </footer>
 
     <script>
-        // 確保 Lucide 載入後再進行初始化
         function initIcons() {
             if (typeof lucide !== 'undefined') {
                 lucide.createIcons();
             } else {
-                // 如果尚未載入，延遲 100 毫秒後重試
                 setTimeout(initIcons, 100);
             }
         }
 
-        // 當視窗資源完全載入後執行
         window.onload = function() {
             initIcons();
         };
 
-        // 處理 AI 試算提交
-        async function handleAISubmit() {
-            const userInputField = document.getElementById('userInput');
-            const input = userInputField.value;
-            const responseDiv = document.getElementById('aiResponse');
-            const responseText = document.getElementById('responseText');
-            
-            if (!input.trim()) return;
-
-            // 顯示讀取狀態
-            responseDiv.classList.remove('hidden');
-            responseText.innerText = "正在分析您的需求，並連接風控模型試算中...";
-            userInputField.value = ""; // 清空輸入框
-
-            // 模擬分析過程
-            setTimeout(() => {
-                const randomId = Math.floor(Math.random() * 9000) + 1000;
-                responseText.innerText = `【AI 試算分析】針對您的「${input}」需求，初步評估具備高流動性，預估額度可達原價 1.2 - 1.5 倍。目前系統已為您鎖定專案代碼「PY-${randomId}」。`;
-            }, 1800);
-        }
-
-        // 監聽 Enter 鍵
-        document.getElementById('userInput').addEventListener('keypress', function (e) {
-            if (e.key === 'Enter') {
-                handleAISubmit();
-            }
-        });
-
-        // 滾動效果控制 Header 背景
         window.addEventListener('scroll', () => {
             const header = document.querySelector('header');
             if (window.scrollY > 20) {
-                header.classList.add('py-2');
                 header.style.background = "rgba(0,0,0,0.95)";
             } else {
-                header.classList.remove('py-2');
                 header.style.background = "rgba(10, 10, 10, 0.85)";
             }
         });
